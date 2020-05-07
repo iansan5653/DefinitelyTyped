@@ -158,6 +158,7 @@ mixed.nullable();
 mixed.required();
 mixed.required('Foo');
 mixed.required(() => 'Foo');
+mixed.defined();
 mixed.notRequired(); // $ExpectType MixedSchema<any>
 mixed.typeError('type error');
 mixed.typeError(() => 'type error');
@@ -308,6 +309,7 @@ function strSchemaTests(strSchema: yup.StringSchema) {
     strSchema.type;
     strSchema.isValid('hello'); // => true
     strSchema.required();
+    strSchema.defined();
     strSchema.required('req');
     strSchema.required(() => 'req');
     strSchema.length(5, 'message');
@@ -397,12 +399,14 @@ numSchema
     .then(value => value)
     .catch(err => err);
 numSchema.oneOf([1, 2] as const); // $ExpectType NumberSchema<1 | 2>
+numSchema.defined(); // $ExpectType NumberSchema<number>
 
 // Boolean Schema
 const boolSchema = yup.boolean();
 boolSchema.type;
 boolSchema.isValid(true); // => true
 boolSchema.oneOf([true] as const); // $ExpectType BooleanSchema<true>
+boolSchema.defined(); // $ExpectType BooleanSchema<boolean>
 
 // Date Schema
 const dateSchema = yup.date();
@@ -419,6 +423,7 @@ dateSchema.max(new Date(), 'message');
 dateSchema.max('2017-11-12', 'message');
 dateSchema.max('2017-11-12', () => 'message');
 dateSchema.oneOf([new Date()] as const); // $ExpectType DateSchema<Date>
+dateSchema.defined(); // $ExpectType DateSchema<Date>
 
 // Array Schema
 const arrSchema = yup.array().of(yup.number().min(2));
@@ -428,6 +433,7 @@ arrSchema.innerType.type;
 arrSchema.isValid([2, 3]); // => true
 arrSchema.isValid([1, -24]); // => false
 arrSchema.required();
+arrSchema.defined();
 arrSchema.required('req');
 arrSchema.required(() => 'req');
 arrSchema.ensure();
@@ -484,6 +490,7 @@ objSchema.transformKeys(key => key.toUpperCase());
 objSchema.camelCase();
 objSchema.snakeCase();
 objSchema.constantCase();
+objSchema.defined();
 interface LiteralExampleObject {
     name: "John Doe";
     age: 35;

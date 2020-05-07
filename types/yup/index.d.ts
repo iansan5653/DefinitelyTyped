@@ -92,6 +92,7 @@ export interface MixedSchema<T = any> extends Schema<T> {
     nullable(isNullable?: true): MixedSchema<T | null>;
     nullable(isNullable: false): MixedSchema<Exclude<T, null>>;
     nullable(isNullable?: boolean): MixedSchema<T>;
+    defined(message?: TestOptionsMessage): MixedSchema<Exclude<T, undefined>>;
     required(message?: TestOptionsMessage): MixedSchema<Exclude<T, undefined>>;
     notRequired(): MixedSchema<T | undefined>;
     concat(schema: this): this;
@@ -123,6 +124,7 @@ export interface StringSchema<T extends string | null | undefined = string | und
     nullable(isNullable?: true): StringSchema<T | null>;
     nullable(isNullable: false): StringSchema<Exclude<T, null>>;
     nullable(isNullable?: boolean): StringSchema<T>;
+    defined(message?: TestOptionsMessage): StringSchema<Exclude<T, undefined>>;
     required(message?: TestOptionsMessage): StringSchema<Exclude<T, undefined>>;
     notRequired(): StringSchema<T | undefined>;
     oneOf<U extends T>(arrayOfValues: ReadonlyArray<U | Ref | null>, message?: MixedLocale['oneOf']): StringSchema<U>;
@@ -146,6 +148,7 @@ export interface NumberSchema<T extends number | null | undefined = number | und
     nullable(isNullable?: true): NumberSchema<T | null>;
     nullable(isNullable: false): NumberSchema<Exclude<T, null>>;
     nullable(isNullable?: boolean): NumberSchema<T>;
+    defined(message?: TestOptionsMessage): NumberSchema<Exclude<T, undefined>>;
     required(message?: TestOptionsMessage): NumberSchema<Exclude<T, undefined>>;
     notRequired(): NumberSchema<T | undefined>;
     oneOf<U extends T>(arrayOfValues: ReadonlyArray<U | Ref | null>, message?: MixedLocale['oneOf']): NumberSchema<U>;
@@ -160,6 +163,7 @@ export interface BooleanSchema<T extends boolean | null | undefined = boolean | 
     nullable(isNullable?: true): BooleanSchema<T | null>;
     nullable(isNullable: false): BooleanSchema<Exclude<T, null>>;
     nullable(isNullable?: boolean): BooleanSchema<T>;
+    defined(message?: TestOptionsMessage): BooleanSchema<Exclude<T, undefined>>;
     required(message?: TestOptionsMessage): BooleanSchema<Exclude<T, undefined>>;
     notRequired(): BooleanSchema<T | undefined>;
     oneOf<U extends T>(arrayOfValues: ReadonlyArray<U | Ref | null>, message?: MixedLocale['oneOf']): BooleanSchema<U>;
@@ -176,6 +180,7 @@ export interface DateSchema<T extends Date | null | undefined = Date | undefined
     nullable(isNullable?: true): DateSchema<T | null>;
     nullable(isNullable: false): DateSchema<Exclude<T, null>>;
     nullable(isNullable?: boolean): DateSchema<T>;
+    defined(message?: TestOptionsMessage): DateSchema<Exclude<T, undefined>>;
     required(message?: TestOptionsMessage): DateSchema<Exclude<T, undefined>>;
     notRequired(): DateSchema<T | undefined>;
     oneOf<U extends T>(arrayOfValues: ReadonlyArray<U | Ref | null>, message?: MixedLocale['oneOf']): DateSchema<U>;
@@ -216,6 +221,7 @@ export interface NullableArraySchema<T> extends BasicArraySchema<T, T[] | null> 
     nullable(isNullable?: true): NullableArraySchema<T>;
     nullable(isNullable: false): ArraySchema<T>;
     nullable(isNullable?: boolean): ArraySchema<T>;
+    defined(message?: TestOptionsMessage): NullableArraySchema<T>;
     required(message?: TestOptionsMessage): NullableArraySchema<T>;
     notRequired(): NotRequiredNullableArraySchema<T>;
 }
@@ -225,6 +231,7 @@ export interface NotRequiredArraySchema<T> extends BasicArraySchema<T, T[] | und
     nullable(isNullable?: true): NotRequiredNullableArraySchema<T>;
     nullable(isNullable: false): NotRequiredArraySchema<T>;
     nullable(isNullable: boolean): ArraySchema<T>;
+    defined(message?: TestOptionsMessage): ArraySchema<T>;
     required(message?: TestOptionsMessage): ArraySchema<T>;
     notRequired(): NotRequiredArraySchema<T>;
 }
@@ -233,6 +240,7 @@ export interface ArraySchema<T = any> extends BasicArraySchema<T, T[]> {
     of<U>(type: Schema<U>): NotRequiredArraySchema<U>;
     nullable(isNullable?: true): NullableArraySchema<T>;
     nullable(isNullable: false | boolean): ArraySchema<T>;
+    defined(message?: TestOptionsMessage): ArraySchema<T>;
     required(message?: TestOptionsMessage): ArraySchema<T>;
     notRequired(): NotRequiredArraySchema<T>;
 }
@@ -276,6 +284,7 @@ export interface ObjectSchema<T extends object | null | undefined = object | und
     nullable(isNullable?: true): ObjectSchema<T | null>;
     nullable(isNullable: false): ObjectSchema<Exclude<T, null>>;
     nullable(isNullable?: boolean): ObjectSchema<T>;
+    defined(message?: TestOptionsMessage): ObjectSchema<Exclude<T, undefined>>;
     required(message?: TestOptionsMessage): ObjectSchema<Exclude<T, undefined>>;
     notRequired(): ObjectSchema<T | undefined>;
     concat(schema: this): this;
@@ -463,6 +472,7 @@ export type LocaleValue = string | ((params: FormatErrorParams) => string);
 interface MixedLocale {
     default?: TestOptionsMessage;
     required?: TestOptionsMessage;
+    defined?: TestOptionsMessage;
     oneOf?: TestOptionsMessage<{ values: any }>;
     notOneOf?: TestOptionsMessage<{ values: any }>;
     notType?: LocaleValue;
