@@ -84,10 +84,8 @@ export interface Schema<T> {
 }
 
 export interface MixedSchemaConstructor {
-    // tslint:disable-next-line:no-unnecessary-generics
-    <T = any>(): MixedSchema<T>;
-    // tslint:disable-next-line:no-unnecessary-generics
-    new <T = any>(options?: { type?: string; [key: string]: any }): MixedSchema<T>;
+    (): MixedSchema;
+    new (options?: { type?: string; [key: string]: any }): MixedSchema;
 }
 
 export interface MixedSchema<T = any> extends Schema<T> {
@@ -102,8 +100,8 @@ export interface MixedSchema<T = any> extends Schema<T> {
 }
 
 export interface StringSchemaConstructor {
-    <T extends string | null | undefined = string>(): T extends string ? StringSchema<T> : StringSchema;
-    new <T extends string | null | undefined = string>(): T extends string ? StringSchema<T> : StringSchema;
+    (): StringSchema;
+    new (): StringSchema;
 }
 
 export interface StringSchema<T extends string | null | undefined = string> extends Schema<T> {
@@ -184,8 +182,8 @@ export interface DateSchema<T extends Date | null | undefined = Date> extends Sc
 }
 
 export interface ArraySchemaConstructor {
-    <T>(schema?: Schema<T>): ArraySchema<T>;
-    new (): ArraySchema<{}>;
+    <T = any>(schema?: Schema<T>): ArraySchema<T>;
+    new (): ArraySchema;
 }
 
 interface BasicArraySchema<T extends any[] | null | undefined> extends Schema<T> {
@@ -258,7 +256,7 @@ export type Shape<T extends object | null | undefined, U extends object> =
 
 export interface ObjectSchemaConstructor {
     <T extends object>(fields?: ObjectSchemaDefinition<T>): ObjectSchema<T>;
-    new (): ObjectSchema<{}>;
+    new (): ObjectSchema;
 }
 
 export interface ObjectSchema<T extends object | null | undefined = object> extends Schema<T> {
