@@ -104,7 +104,7 @@ export interface StringSchemaConstructor {
     new (): StringSchema;
 }
 
-export interface StringSchema<T extends string | null | undefined = string> extends Schema<T> {
+export interface StringSchema<T extends string | null | undefined = string | undefined> extends Schema<T> {
     length(limit: number | Ref, message?: StringLocale['length']): StringSchema<T>;
     min(limit: number | Ref, message?: StringLocale['min']): StringSchema<T>;
     max(limit: number | Ref, message?: StringLocale['max']): StringSchema<T>;
@@ -133,7 +133,7 @@ export interface NumberSchemaConstructor {
     new (): NumberSchema;
 }
 
-export interface NumberSchema<T extends number | null | undefined = number> extends Schema<T> {
+export interface NumberSchema<T extends number | null | undefined = number | undefined> extends Schema<T> {
     min(limit: number | Ref, message?: NumberLocale['min']): NumberSchema<T>;
     max(limit: number | Ref, message?: NumberLocale['max']): NumberSchema<T>;
     lessThan(limit: number | Ref, message?: NumberLocale['lessThan']): NumberSchema<T>;
@@ -156,7 +156,7 @@ export interface BooleanSchemaConstructor {
     new (): BooleanSchema;
 }
 
-export interface BooleanSchema<T extends boolean | null | undefined = boolean> extends Schema<T> {
+export interface BooleanSchema<T extends boolean | null | undefined = boolean | undefined> extends Schema<T> {
     nullable(isNullable?: true): BooleanSchema<T | null>;
     nullable(isNullable: false): BooleanSchema<Exclude<T, null>>;
     nullable(isNullable?: boolean): BooleanSchema<T>;
@@ -170,7 +170,7 @@ export interface DateSchemaConstructor {
     new (): DateSchema;
 }
 
-export interface DateSchema<T extends Date | null | undefined = Date> extends Schema<T> {
+export interface DateSchema<T extends Date | null | undefined = Date | undefined> extends Schema<T> {
     min(limit: Date | string | Ref, message?: DateLocale['min']): DateSchema<T>;
     max(limit: Date | string | Ref, message?: DateLocale['max']): DateSchema<T>;
     nullable(isNullable?: true): DateSchema<T | null>;
@@ -259,7 +259,7 @@ export interface ObjectSchemaConstructor {
     new (): ObjectSchema;
 }
 
-export interface ObjectSchema<T extends object | null | undefined = object> extends Schema<T> {
+export interface ObjectSchema<T extends object | null | undefined = object | undefined> extends Schema<T> {
     fields: {
         [k in keyof T]: Schema<T[k]>;
     };
